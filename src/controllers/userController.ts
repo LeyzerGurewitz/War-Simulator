@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import {createToken} from "../utils/jwtUtils";
 import { createUserService, findUserService } from "../service/userService";
-
+import User from "../models/userModel";
+import { ResponseStructure } from "../types/response";
 export const registerUser = async (
     req: Request,
     res: Response,
@@ -51,3 +52,19 @@ export const loginUser =  async (
     }
 }
 
+export const getUserByToken = async (req: any, res: Response, next: NextFunction) => {
+    try {
+        const userId:any = req.user._id; 
+        const user = await User.findById(userId).select("-password").populate("organization");
+
+        
+        if (!user) {
+             res.status(404).json(new ResponseStructure(false, "User not found"));
+             return
+        }
+        
+        res.status(200).json(new ResponseStructure(true, user));
+    } catch (error) {
+        next();
+    }
+};

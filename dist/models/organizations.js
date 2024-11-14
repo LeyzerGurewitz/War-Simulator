@@ -21,9 +21,8 @@ const OrganizationSchema = new mongoose_1.Schema({
     },
     resources: [
         {
-            missile: {
-                type: mongoose_1.Schema.Types.ObjectId,
-                ref: 'Missile',
+            name: {
+                type: String,
                 required: true
             },
             amount: {

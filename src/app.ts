@@ -10,9 +10,9 @@ import { initializeSocketServer } from './sockets/webSocket';
 import { errorHandler } from "./middleware/errorHandler";
 import { Server } from "socket.io";
 dotenv.config();
+const PORT = process.env.PORT || 3000;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
     origin: '*',
