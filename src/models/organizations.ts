@@ -1,14 +1,17 @@
-import { model, Schema, Types } from 'mongoose'
+import { Schema, model, Types } from 'mongoose';
 
 
 export interface IOrganization {
     _id: Types.ObjectId;
-    name: EOrganization;
-    resources: {
-        missile: Types.ObjectId;
-        amount: number;
-    }[];
-    budget: number;
+    name: EOrganization; 
+    resources: IResource[]; 
+    budget: number; 
+}
+
+
+export interface IResource {
+    name: string; 
+    amount: number; 
 }
 
 export enum EOrganization {
@@ -30,9 +33,8 @@ const OrganizationSchema = new Schema<IOrganization>(
         },
         resources: [
             {
-                missile: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Missile', 
+                name: {
+                    type: String,
                     required: true
                 },
                 amount: {
@@ -49,3 +51,4 @@ const OrganizationSchema = new Schema<IOrganization>(
 );
 
 export default model<IOrganization>('Organization', OrganizationSchema);
+

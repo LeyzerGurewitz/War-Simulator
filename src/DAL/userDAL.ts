@@ -18,7 +18,7 @@ export const createUser = async (user: IUser): Promise<IUser> => {
     return newUser;
 }
 
-export const findUserInDB = async(userName: string): Promise<IUser > =>{
+export const findUserInDB = async(userName: string): Promise<IUser> =>{
     const newUser = await User.findOne({ userName: userName });
     if(!newUser){
         throw new Error("No user found")

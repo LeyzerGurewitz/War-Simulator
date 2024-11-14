@@ -6,7 +6,9 @@ import connectDB from './config/db';
 import http from 'http';
 import RouteUser from './routes/userRoutes';
 import Organization, { EOrganization } from './models/organizations';
-
+import { initializeSocketServer } from './sockets/webSocket';
+import { errorHandler } from "./middleware/errorHandler";
+import { Server } from "socket.io";
 dotenv.config();
 
 const app = express();
@@ -22,12 +24,20 @@ app.use(express.json());
 
 connectDB();
 
-const server = http.createServer(app);
-
 app.use('/api', RouteUser);
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+      origin: "*"
+    }
+  });
+
+  initializeSocketServer(io);
 
 
 
+
+app.use(errorHandler);
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

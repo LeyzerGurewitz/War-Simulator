@@ -7,6 +7,7 @@ export interface IUser {
     password: string;
     organization: Types.ObjectId; 
     organizationName: string
+    
 }
 
 
